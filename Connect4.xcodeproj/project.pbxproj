@@ -85,16 +85,8 @@
 				065E6DD0215E42AB006A5ECE /* Helper */,
 				065E6DCE215E429D006A5ECE /* Model */,
 				065E6DDD215F8906006A5ECE /* Connect4Game */,
-				065E6DCD215E428E006A5ECE /* Controller */,
 			);
 			path = Connect4;
-			sourceTree = "<group>";
-		};
-		065E6DCD215E428E006A5ECE /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		065E6DCE215E429D006A5ECE /* Model */ = {
