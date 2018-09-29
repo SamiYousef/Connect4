@@ -21,7 +21,7 @@ enum Direction: Int {
     case negativeDiagonal
 }
 
-struct GridPosition {
+struct GridPosition: Equatable {
     var row, column : Int
 }
 

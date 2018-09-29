@@ -59,7 +59,6 @@ class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
             viewModel.addCoinToGameBoard(inColumn: column)
             displayChip(viewModel.activePlayer.coin, at: column, row: row)
         }
-        updateGame()
     }
 
     override func viewDidLayoutSubviews() {
@@ -80,12 +79,9 @@ class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
         redPlayerTurnIndicator.frame.size = coinSize
     }
 
-    func updateCoins() {}
-
     func displayChip(_ coin: CoinStatus, at column:Int, row: Int) {
         let chipFrame = CGRect(x: 0, y: 0, width: columnWidth, height: columnWidth)
         let chip = UIImageView(frame: chipFrame)
-        chip.tag = 20
         chip.image = coin == .red ? #imageLiteral(resourceName: "coin_1") : #imageLiteral(resourceName: "coin_2")
         chip.contentMode = .scaleAspectFit
 
@@ -95,23 +91,17 @@ class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
 
         chip.transform = CGAffineTransform(translationX: 0, y: -800)
         view.addSubview(chip)
+        viewModel.addChipToGrid(imageView: chip, row: row, column: column)
 
         UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {
             chip.transform = CGAffineTransform.identity
         }) { (completed) in
-            if completed {
-                self.soundPlayer.coinDropping()
-                if self.viewModel.gameBoard.winnerCoins.count == 4 {
-                    self.showWinningPath()
-                }
-                // self.displayCurrentTurn()
+            self.soundPlayer.coinDropping()
+            self.updateGame()
+            if self.viewModel.winnerCoinsCount >= 4 {
+                self.viewModel.showWinningPath()
             }
         }
-
-    }
-
-    func showWinningPath() {
-        
     }
 
     private func updateGame() {
@@ -140,11 +130,7 @@ class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBAction func newGameButton(_ sender: UIButton) {
         toggleNewGameButton(hiden: true)
-        viewModel.gameBoard.resetBoard()
-        let boardImageViews = self.view.subviews.filter{$0.tag == 20}
-        for boardImageView in boardImageViews {
-            boardImageView.removeFromSuperview()
-        }
+        viewModel.resetGame()
         toggleViewInteraction(active: true)
     }
 
