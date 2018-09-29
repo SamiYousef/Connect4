@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Connect4 View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="Connect4ViewController" customModule="Connect4" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4HZ-gn-R8X">
+                                <rect key="frame" x="4" y="28" width="367" height="32"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coin_1" translatesAutoresizingMaskIntoConstraints="NO" id="yiM-J2-thC">
+                                        <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="pRq-19-7Zk"/>
+                                            <constraint firstAttribute="width" constant="32" id="xVm-d0-RZS"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fl-Pg-Jvt">
+                                        <rect key="frame" x="40" y="0.0" width="133.5" height="32"/>
+                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="23"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ZL-7o-iiu">
+                                        <rect key="frame" x="181.5" y="0.0" width="4" height="32"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="4" id="UGW-rS-bcd"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOS-sn-e6B">
+                                        <rect key="frame" x="193.5" y="0.0" width="133.5" height="32"/>
+                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="23"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coin_2" translatesAutoresizingMaskIntoConstraints="NO" id="sBZ-nD-Ad1">
+                                        <rect key="frame" x="335" y="0.0" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="E71-gO-mBq"/>
+                                            <constraint firstAttribute="width" constant="32" id="NM4-8c-cGd"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="eOS-sn-e6B" firstAttribute="width" secondItem="1fl-Pg-Jvt" secondAttribute="width" id="u4w-tu-iuT"/>
+                                </constraints>
+                            </stackView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="08h-R4-Eiy">
+                                <rect key="frame" x="67.5" y="269.5" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.0" green="0.6470588235294118" blue="1" alpha="0.49866224315068491" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="ETY-Cp-xJj"/>
+                                    <constraint firstAttribute="width" constant="240" id="oM7-OM-HRy"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="fQP-8R-Fv8">
+                                    <size key="itemSize" width="130" height="130"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hck-Jk-kII">
+                                <rect key="frame" x="75.5" y="600" width="224" height="59"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="37"/>
+                                <state key="normal" title="New Game">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="newGameButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8VI-PF-eT1"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.6470588235294118" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="4HZ-gn-R8X" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="4" id="5zS-gy-HbZ"/>
+                            <constraint firstItem="08h-R4-Eiy" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="6CZ-gf-qNz"/>
+                            <constraint firstItem="08h-R4-Eiy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7CX-Hn-1aG"/>
+                            <constraint firstItem="4HZ-gn-R8X" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="8EF-O5-hOc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hck-Jk-kII" secondAttribute="bottom" constant="8" id="GpK-VE-9Il"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4HZ-gn-R8X" secondAttribute="trailing" constant="4" id="ZXC-fk-MQj"/>
+                            <constraint firstItem="hck-Jk-kII" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tFx-Aq-bvc"/>
+                            <constraint firstItem="08h-R4-Eiy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tnn-MK-pZ3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="gameGridView" destination="08h-R4-Eiy" id="egJ-Bd-Vyt"/>
+                        <outlet property="heightConstraint" destination="ETY-Cp-xJj" id="d8i-8D-ffK"/>
+                        <outlet property="newgameButton" destination="hck-Jk-kII" id="66Y-QQ-qnW"/>
+                        <outlet property="redPlayerTurnIndicator" destination="yiM-J2-thC" id="KuY-bq-yUa"/>
+                        <outlet property="redScore" destination="1fl-Pg-Jvt" id="5mO-bX-XMC"/>
+                        <outlet property="widthConstraint" destination="oM7-OM-HRy" id="7hU-Vh-XuS"/>
+                        <outlet property="yellowPlayerTurnIndicator" destination="sBZ-nD-Ad1" id="Eob-qj-nbm"/>
+                        <outlet property="yellowScore" destination="eOS-sn-e6B" id="ImB-Xv-Jmt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.71875" y="132.421875"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="coin_1" width="60" height="60"/>
+        <image name="coin_2" width="60" height="60"/>
+    </resources>
+</document>
