@@ -14,6 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        let connect4Game = Connect4WireFrame.createConnect4GameModule()
+
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = connect4Game
+        window?.makeKeyAndVisible()
         return true
     }
 

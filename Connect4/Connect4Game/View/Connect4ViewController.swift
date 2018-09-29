@@ -10,11 +10,6 @@ import UIKit
 
 class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
 
-    var columns       = 7
-    var rows          = 6
-
-    var firstPlayer, secundPlayer, activePlayer: Player!
-
     @IBOutlet weak var redScore: UILabel!
     @IBOutlet weak var yellowScore: UILabel!
     @IBOutlet weak var gameGridView: UICollectionView!
@@ -24,15 +19,16 @@ class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var redPlayerTurnIndicator: UIImageView!
     @IBOutlet weak var newgameButton: UIButton!
 
+    var viewModel: Connect4ViewModel!
+    var presenter: Connect4PresenterProtocol?
     var soundPlayer = SoundPlayer()
-    var gameBoard: GameBoard!
 
     var coinSize: CGSize {
         return CGSize(width: columnWidth, height: columnWidth)
     }
 
     var columnWidth: CGFloat {
-        return gameGridView.bounds.size.width / CGFloat(columns)
+        return gameGridView.bounds.size.width / CGFloat(viewModel.columns)
     }
 
     lazy var tapRegognizer: UITapGestureRecognizer = {
@@ -44,26 +40,24 @@ class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        presenter?.viewDidLoad()
+        viewModel = Connect4ViewModel()
+
         gameGridView.dataSource = self
         gameGridView.delegate = self
         gameGridView.register(GridCell.self, forCellWithReuseIdentifier: .gridCellId)
         gameGridView.transform = CGAffineTransform.init(rotationAngle: (-(CGFloat)(Double.pi)))
         gameGridView.addGestureRecognizer(tapRegognizer)
-
-        gameBoard = GameBoard(rows: rows, columns: columns)
-        self.firstPlayer = Player(coin: .red)
-        secundPlayer = Player(coin: .yellow)
-        activePlayer = firstPlayer
     }
 
     @objc func drop(_ sender: UITapGestureRecognizer) {
         toggleViewInteraction(active: false)
         let location = sender.location(in: gameGridView)
-        var column = getColumnFrom(positionInView: location)
+        var column = viewModel.getColumnFrom(positionInView: location, columnWidth: columnWidth)
         column = abs(column - 6)
-        if let row = gameBoard.nextEmptyRow(at: column) {
-            gameBoard.addCoin(withStatus: activePlayer.coin, inColumn: column)
-            displayChip(activePlayer.coin, at: column, row: row)
+        if let row = viewModel.nextEmptyRow(column: column) {
+            viewModel.addCoinToGameBoard(inColumn: column)
+            displayChip(viewModel.activePlayer.coin, at: column, row: row)
         }
         updateGame()
     }
@@ -78,7 +72,7 @@ class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
         let screenWidth  = screenBounds.size.width
         let screenHeight = screenBounds.size.height
         if screenHeight > screenWidth {
-            heightConstraint.constant = screenWidth / CGFloat(rows) * CGFloat(rows)
+            heightConstraint.constant = screenWidth / CGFloat(viewModel.rows) * CGFloat(viewModel.rows)
             widthConstraint.constant  = screenWidth
         }
         yellowPlayerTurnIndicator.frame.size = coinSize
@@ -88,24 +82,16 @@ class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
 
     func updateCoins() {}
 
-    func switchAcivePlayer() {
-        activePlayer = activePlayer == firstPlayer ? secundPlayer : firstPlayer
-    }
-
     func displayChip(_ coin: CoinStatus, at column:Int, row: Int) {
-//        print("row: \(row)  column: \(column)")
-//        gameBoard.printGameGrid()
-//        print(activePlayer.coin)
-
         let chipFrame = CGRect(x: 0, y: 0, width: columnWidth, height: columnWidth)
         let chip = UIImageView(frame: chipFrame)
         chip.tag = 20
         chip.image = coin == .red ? #imageLiteral(resourceName: "coin_1") : #imageLiteral(resourceName: "coin_2")
         chip.contentMode = .scaleAspectFit
 
-        let x = gameGridView.frame.minX + CGFloat(column)*columnWidth + columnWidth/2
-        let y = gameGridView.frame.maxY - columnWidth*CGFloat(row) - columnWidth/2
-        chip.center = CGPoint(x: x, y: y)
+        let xPos = gameGridView.frame.minX + CGFloat(column)*columnWidth + columnWidth/2
+        let yPos = gameGridView.frame.maxY - columnWidth*CGFloat(row) - columnWidth/2
+        chip.center = CGPoint(x: xPos, y: yPos)
 
         chip.transform = CGAffineTransform(translationX: 0, y: -800)
         view.addSubview(chip)
@@ -115,65 +101,46 @@ class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
         }) { (completed) in
             if completed {
                 self.soundPlayer.coinDropping()
-                if self.gameBoard.winnerCoins.count == 4 {
-                    //self.showWinningPath()
+                if self.viewModel.gameBoard.winnerCoins.count == 4 {
+                    self.showWinningPath()
                 }
-               // self.displayCurrentTurn()
+                // self.displayCurrentTurn()
             }
         }
 
     }
 
+    func showWinningPath() {
+        
+    }
+
     private func updateGame() {
-        if gameBoard.isPlayerWon(coin: activePlayer.coin, connections: 4) {
+        if viewModel.isPlayerWin {
             toggleViewInteraction(active: false)
-            displayWinnerAlert(winner: activePlayer)
+            viewModel.incrementActivePlayer()
+            toggleNewGameButton(hiden: false)
+            updatePlayerScore()
+            displayWinnerAlert(winner: viewModel.activePlayer)
         } else {
             toggleViewInteraction(active: true)
-            switchAcivePlayer()
+            viewModel.switchAcivePlayer()
         }
     }
 
     func displayWinnerAlert(winner: Player) {
-
-        var title = ""
-        var message = ""
-
-        title = "Game Over"
-        message = "Player \(winner.playerName) wins!"
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        let title = "Game Over"
+        let message = "Player \(winner.playerName) wins!"
+        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1) {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let playAgainAction = UIAlertAction(title: "Play Again", style: .default) { _ in
-                //self.newGame()
-            }
-
-            let exitAgainAction = UIAlertAction(title: "Exit", style: .default) { _ in
-                self.navigationController?.popToRootViewController(animated: true)
-            }
-
+            let playAgainAction = UIAlertAction(title: "Ok", style: .default)
             alert.addAction(playAgainAction)
-            alert.addAction(exitAgainAction)
             self.present(alert, animated: true, completion: nil)
         }
-
-    }
-//    func getCGPoint(for move: Move) -> CGPoint {
-//        let chipSize = max(gameBoard.frame.width / CGFloat(Board.width), gameBoard.frame.height / CGFloat(Board.height))
-//        let columnView = columnViews[move.column]
-//        let x = columnView.frame.midX + gameBoard.frame.minX
-//        var y = columnView.frame.maxY - chipSize / 2 + gameBoard.frame.minY
-//        y -= chipSize * CGFloat(move.row)
-//
-//        return CGPoint(x: x, y: y)
-//    }
-
-    private func getColumnFrom(positionInView pos:CGPoint) -> Int {
-        return Int(floor(pos.x / columnWidth))
     }
 
     @IBAction func newGameButton(_ sender: UIButton) {
-        gameBoard.resetBoard()
+        toggleNewGameButton(hiden: true)
+        viewModel.gameBoard.resetBoard()
         let boardImageViews = self.view.subviews.filter{$0.tag == 20}
         for boardImageView in boardImageViews {
             boardImageView.removeFromSuperview()
@@ -183,6 +150,15 @@ class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
 
     func toggleViewInteraction(active: Bool) {
         gameGridView.isUserInteractionEnabled = active
+    }
+
+    func toggleNewGameButton(hiden: Bool) {
+        newgameButton.isHidden = hiden
+    }
+
+    func updatePlayerScore() {
+        redScore.text = String(viewModel.firstPlayer.numOfWins)
+        yellowScore.text = String(viewModel.secundPlayer.numOfWins)
     }
 }
 
@@ -194,16 +170,34 @@ extension Connect4ViewController: UICollectionViewDataSource, UICollectionViewDe
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return rows
+        return viewModel.rows
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return columns
+        return viewModel.columns
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return coinSize
     }
 
+}
+
+extension Connect4ViewController: Connect4ViewProtocol {
+    func updateView(with configuration: [GameConfiguration]) {
+        guard let configuration = configuration.first else { return }
+        viewModel.updatePlayer(with: configuration)
+    }
+
+    func showError() {
+    }
+
+    func showLoading() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+
+    func hideLoading() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
 }
 
 fileprivate extension String {

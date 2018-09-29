@@ -17,6 +17,12 @@
 		065E6DD6215E6AE5006A5ECE /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6DD5215E6AE5006A5ECE /* GameBoard.swift */; };
 		065E6DD8215EA5DE006A5ECE /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6DD7215EA5DE006A5ECE /* GridCell.swift */; };
 		065E6DDA215F1BBE006A5ECE /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6DD9215F1BBE006A5ECE /* Player.swift */; };
+		065E6DDF215F893B006A5ECE /* Connect4Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6DDE215F893B006A5ECE /* Connect4Interactor.swift */; };
+		065E6DE1215F8967006A5ECE /* Connect4Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6DE0215F8967006A5ECE /* Connect4Presenter.swift */; };
+		065E6DE4215F8983006A5ECE /* Connect4Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6DE3215F8983006A5ECE /* Connect4Protocols.swift */; };
+		065E6DE6215F89B2006A5ECE /* Connect4WireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6DE5215F89B2006A5ECE /* Connect4WireFrame.swift */; };
+		065E6DE8215F8BC7006A5ECE /* GameConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6DE7215F8BC7006A5ECE /* GameConfiguration.swift */; };
+		065E6DEA215FAEB9006A5ECE /* Connect4ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6DE9215FAEB9006A5ECE /* Connect4ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +38,12 @@
 		065E6DD5215E6AE5006A5ECE /* GameBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
 		065E6DD7215EA5DE006A5ECE /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
 		065E6DD9215F1BBE006A5ECE /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		065E6DDE215F893B006A5ECE /* Connect4Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connect4Interactor.swift; sourceTree = "<group>"; };
+		065E6DE0215F8967006A5ECE /* Connect4Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connect4Presenter.swift; sourceTree = "<group>"; };
+		065E6DE3215F8983006A5ECE /* Connect4Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connect4Protocols.swift; sourceTree = "<group>"; };
+		065E6DE5215F89B2006A5ECE /* Connect4WireFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connect4WireFrame.swift; sourceTree = "<group>"; };
+		065E6DE7215F8BC7006A5ECE /* GameConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfiguration.swift; sourceTree = "<group>"; };
+		065E6DE9215FAEB9006A5ECE /* Connect4ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connect4ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,8 +81,8 @@
 				065E6DDC215F41D1006A5ECE /* Assets */,
 				065E6DDB215F41AC006A5ECE /* StoryBoard */,
 				065E6DD0215E42AB006A5ECE /* Helper */,
-				065E6DCF215E42A5006A5ECE /* View */,
 				065E6DCE215E429D006A5ECE /* Model */,
+				065E6DDD215F8906006A5ECE /* Connect4Game */,
 				065E6DCD215E428E006A5ECE /* Controller */,
 			);
 			path = Connect4;
@@ -79,7 +91,6 @@
 		065E6DCD215E428E006A5ECE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				065E6DBD215E3B1B006A5ECE /* Connect4ViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -89,6 +100,7 @@
 			children = (
 				065E6DD5215E6AE5006A5ECE /* GameBoard.swift */,
 				065E6DD9215F1BBE006A5ECE /* Player.swift */,
+				065E6DE7215F8BC7006A5ECE /* GameConfiguration.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -97,6 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				065E6DD7215EA5DE006A5ECE /* GridCell.swift */,
+				065E6DBD215E3B1B006A5ECE /* Connect4ViewController.swift */,
+				065E6DE9215FAEB9006A5ECE /* Connect4ViewModel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -125,6 +139,18 @@
 				065E6DD3215E4B60006A5ECE /* Sounds.xcassets */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		065E6DDD215F8906006A5ECE /* Connect4Game */ = {
+			isa = PBXGroup;
+			children = (
+				065E6DCF215E42A5006A5ECE /* View */,
+				065E6DE3215F8983006A5ECE /* Connect4Protocols.swift */,
+				065E6DDE215F893B006A5ECE /* Connect4Interactor.swift */,
+				065E6DE0215F8967006A5ECE /* Connect4Presenter.swift */,
+				065E6DE5215F89B2006A5ECE /* Connect4WireFrame.swift */,
+			);
+			path = Connect4Game;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,11 +225,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				065E6DEA215FAEB9006A5ECE /* Connect4ViewModel.swift in Sources */,
+				065E6DE4215F8983006A5ECE /* Connect4Protocols.swift in Sources */,
+				065E6DE1215F8967006A5ECE /* Connect4Presenter.swift in Sources */,
 				065E6DD6215E6AE5006A5ECE /* GameBoard.swift in Sources */,
+				065E6DE8215F8BC7006A5ECE /* GameConfiguration.swift in Sources */,
 				065E6DBE215E3B1B006A5ECE /* Connect4ViewController.swift in Sources */,
 				065E6DD2215E4306006A5ECE /* SoundPlayer.swift in Sources */,
 				065E6DBC215E3B1B006A5ECE /* AppDelegate.swift in Sources */,
+				065E6DE6215F89B2006A5ECE /* Connect4WireFrame.swift in Sources */,
 				065E6DDA215F1BBE006A5ECE /* Player.swift in Sources */,
+				065E6DDF215F893B006A5ECE /* Connect4Interactor.swift in Sources */,
 				065E6DD8215EA5DE006A5ECE /* GridCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
