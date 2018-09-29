@@ -129,6 +129,7 @@ class Connect4ViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 
     @IBAction func newGameButton(_ sender: UIButton) {
+        soundPlayer.newGame()
         toggleNewGameButton(hiden: true)
         viewModel.resetGame()
         toggleViewInteraction(active: true)
