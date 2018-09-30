@@ -19,7 +19,6 @@ struct Chip {
         case #imageLiteral(resourceName: "coin_2"):
             imageView.image = #imageLiteral(resourceName: "coin_2_shaded")
         default:
-            print(imageView)
             imageView.image = #imageLiteral(resourceName: "grid_box")
         }
     }
